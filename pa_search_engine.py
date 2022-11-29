@@ -149,16 +149,6 @@ def calculate_first_invert_index(forward_index_dict, invert_index_dict, filename
 
     return invert_index_dict
 
-def calculate_next_invert_index(forward_index_dict, files_for_words, invert_index_dict, filename):
-    # Inverted Index
-    for value in forward_index_dict.values():
-        for word in value:
-            if filename not in files_for_words:
-                files_for_words.append(filename)
-            invert_index_dict[word] = files_for_words
-
-    return invert_index_dict
-
 def calculate_forward_index(list_of_words, file_name, forward_index_dict, file_words):
     for word in list_of_words:
         file_words.append(word)
