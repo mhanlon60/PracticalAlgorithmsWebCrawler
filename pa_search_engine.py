@@ -22,7 +22,7 @@ import os
 
 # %%----------------------------------------------------------------------------
 def dict_to_file(di, fi):
-    with open(fi, "w") as f:
+    with open(fi, "w", encoding='utf-8') as f:
         for key, value in di.items():
             f.write("%s:%s\n" % (key, value))
 
@@ -71,6 +71,7 @@ def sanitize_word(word):
     Removes all non ascii characters from a given word
     """
     newword = word.encode('ascii', 'ignore')
+    newword = word.lower()
     return newword
 
 
@@ -85,10 +86,18 @@ def parse_line(line):
     
     """
     list_of_words = line.split()
+    new_list = []
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                'u', 'v', 'w',
+                'x', 'y', 'z']
     for word in list_of_words:
-        word = word.strip()
-        word = sanitize_word(word)
-    return (list_of_words)
+        newword = ""
+        for i in range(len(word)):
+            if word[i].lower() in alphabet:
+                newword += word[i]
+        newword = sanitize_word(newword)
+        new_list.append(newword)
+    return (new_list)
 
 
 # %%----------------------------------------------------------------------------
@@ -107,31 +116,37 @@ def index_file(filename
     and updates the global invert_index
     """
     start = timer()
-    number_of_occurences = {}
-    files_for_words = []
+    total_word_count_list = []
     with open(filepath, 'r', encoding="utf-8-sig") as f:
+        number_of_occurences = {}
+        frequency_for_word = {}
         file_words = []
         total_word_num = 0
+        if filename == "second.txt":
+            print("here")
         for line in f:
-            for word in line:
-                total_word_num += 1
             list_of_words = parse_line(line)
             forward_index = calculate_forward_index(list_of_words, filename, forward_index, file_words)
-            number_of_occurences = calculate_term_freq(list_of_words, number_of_occurences, file_words)
+        total_word_num = len(forward_index[filename])
+        number_of_occurences = calculate_term_freq(forward_index, number_of_occurences, filename)
         invert_index = calculate_first_invert_index(forward_index, invert_index, filename)
-        for key in number_of_occurences.keys():
+        for key in number_of_occurences:
             # term_frequency
             freq = number_of_occurences[key] / total_word_num
-            term_freq[key] = freq
+            frequency_for_word[key] = freq
 
+        term_freq[filename] = frequency_for_word
+
+    for key in forward_index:
+        doc_rank[key] = 1 / len(forward_index[key])
     end = timer()
     print("Time taken to index file: ", filename, " = ", end - start)
 
 
 # %%----------------------------------------------------------------------------
 
-def calculate_term_freq(list_of_words, number_of_occurences, file_words):
-    for word in list_of_words:
+def calculate_term_freq(forward_index, number_of_occurences, filename):
+    for word in forward_index[filename]:
         if word not in number_of_occurences:
             number_of_occurences[word] = 1
         elif word in number_of_occurences:
@@ -145,9 +160,10 @@ def calculate_first_invert_index(forward_index_dict, invert_index_dict, filename
         if value not in invert_index_dict:
             invert_index_dict[value] = [filename]
         elif value in invert_index_dict and filename not in invert_index_dict[value]:
-            invert_index_dict[value] = invert_index_dict[value]+[filename]
+            invert_index_dict[value] = invert_index_dict[value] + [filename]
 
     return invert_index_dict
+
 
 def calculate_forward_index(list_of_words, file_name, forward_index_dict, file_words):
     for word in list_of_words:
@@ -172,8 +188,26 @@ def search(search_phrase
     """
 
     words = parse_line(search_phrase)
-    result = {}
-    sorted_result = ""
-    # <YOUR-CODE-HERE>
+    result_tuple_list = []
+    weight = 0
+    resultTuple = ()
 
-    return (sorted_result)
+    for key in forward_index:
+        final_weight = 0
+        for word in words:
+            try:
+                weight += (term_freq[key][word] * inv_doc_freq[word])
+                if final_weight == 0:
+                    final_weight += weight
+                else:
+                    final_weight *= weight
+            except KeyError:
+                resultTuple = (key, 0)
+                final_weight = 0
+                break
+
+            resultTuple = (key, final_weight * doc_rank[key])
+            result_tuple_list.append(resultTuple)
+
+    result_tuple_list.sort(key=lambda x: x[1], reverse=True)
+    return result_tuple_list
