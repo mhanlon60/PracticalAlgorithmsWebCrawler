@@ -122,8 +122,6 @@ def index_file(filename
         frequency_for_word = {}
         file_words = []
         total_word_num = 0
-        if filename == "second.txt":
-            print("here")
         for line in f:
             list_of_words = parse_line(line)
             forward_index = calculate_forward_index(list_of_words, filename, forward_index, file_words)
