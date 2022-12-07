@@ -14,4 +14,4 @@ The indexing operation has a complexity of O(n^2) where n represents each word o
 
 The search operation after indexing has a complexity of O(n) where n represents the number of words in the forward index of a file. This is quicker since the forward index already contains each word that exists in each file, reducing the O complexity so that the relationship between a file and the words in it does not have to be established and the words can just be looped through.
 
-The Big O complexity of a search operation without indexing depends on how it is implemented. It would be O(n^3) as for every search it must be checked in a query encompassing each file, each line in that file and each word in that line.
+The Big O complexity of a search operation without indexing depends on how it is implemented. It would be O(n^3) as for every search it must be checked in a query encompassing each file, each line in that file and each word in that line. n in this case represents the amount of layers to the indexing operation that will have to be undertaken before results can be displayed.
