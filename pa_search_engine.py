@@ -91,8 +91,6 @@ def parse_line(line):
                 'u', 'v', 'w',
                 'x', 'y', 'z']
     for word in list_of_words:
-        if word == "\n":
-            return
         newword = ""
         for i in range(len(word)):
             if word[i].lower() in alphabet:
@@ -124,22 +122,21 @@ def index_file(filename
         number_of_occurences = {}
         frequency_for_word = {}
         file_words = []
-        total_word_num = 0
         for line in f:
             list_of_words = parse_line(line)
             forward_index = calculate_forward_index(list_of_words, filename, forward_index, file_words)
         total_word_num = len(forward_index[filename])
         number_of_occurences = calculate_term_freq(forward_index, number_of_occurences, filename)
         invert_index = calculate_first_invert_index(forward_index, invert_index, filename)
-        for key in number_of_occurences:
+        for key in number_of_occurences.keys():
             # term_frequency
             freq = number_of_occurences[key] / total_word_num
             frequency_for_word[key] = freq
 
         term_freq[filename] = frequency_for_word
 
-    for key in forward_index:
-        doc_rank[key] = 1 / len(forward_index[key])
+
+    doc_rank[filename] = 1 / len(forward_index[filename])
     end = timer()
     print("Time taken to index file: ", filename, " = ", end - start)
 
@@ -190,20 +187,18 @@ def search(search_phrase
 
     words = parse_line(search_phrase)
     result_tuple_list = []
-    weight = 1
     resultTuple = ()
 
     for key in doc_rank.keys():
         final_weight = 0
         for word in words:
             try:
-                weight *= (term_freq[key][word] * inv_doc_freq[word])
+                weight = (term_freq[key][word] * inv_doc_freq[word])
                 if final_weight == 0:
                     final_weight += weight
                 else:
                     final_weight *= weight
             except KeyError:
-                resultTuple = (key, 0)
                 final_weight = 0
                 break
 

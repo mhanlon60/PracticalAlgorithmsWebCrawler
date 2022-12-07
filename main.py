@@ -25,7 +25,7 @@ if __name__ == "__main__":
     inv_doc_freq = {}
     doc_rank = {}
     
-    target_dir = "search_dir_full"
+    target_dir = "search_dir"
     
     print("Crawling initiated")
     start = timer()

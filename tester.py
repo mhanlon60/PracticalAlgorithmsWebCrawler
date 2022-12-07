@@ -28,7 +28,7 @@ if __name__ == "__main__":
     inv_doc_freq = {}
     doc_rank = {}
     
-    target_dir = "search_dir_full"
+    target_dir = "search_dir"
     
     print("Crawling initated")
     start = timer()
@@ -65,7 +65,8 @@ if __name__ == "__main__":
                         ]
                         )
                     )
- 
+
+
     test_cases.append(
                         ("here comes the sun",
                         ["divine_comedy.txt"
@@ -73,13 +74,14 @@ if __name__ == "__main__":
                         ,"moby_dick.txt"
                         ,"shakespeare.txt"
                         ,"oliver_twist.txt"
-                        ,"sherlock.txt"
                         ,"little_women.txt"
+                        ,"sherlock.txt"
                         ,"anna_karenina.txt"
                         ,"war_and_peace.txt"
                         ]
                         )
                     ) 
+
 
     test_cases.append(
                         ("anna oliver",
