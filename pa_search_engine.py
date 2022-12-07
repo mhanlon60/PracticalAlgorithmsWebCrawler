@@ -85,18 +85,21 @@ def parse_line(line):
     HINT: Consider using the "strip()" and "split()" function here
     
     """
-    list_of_words = line.split()
+    list_of_words = line.strip().split()
     new_list = []
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
                 'u', 'v', 'w',
                 'x', 'y', 'z']
     for word in list_of_words:
+        if word == "\n":
+            return
         newword = ""
         for i in range(len(word)):
             if word[i].lower() in alphabet:
                 newword += word[i]
         newword = sanitize_word(newword)
-        new_list.append(newword)
+        if newword != "":
+            new_list.append(newword)
     return (new_list)
 
 
@@ -187,14 +190,14 @@ def search(search_phrase
 
     words = parse_line(search_phrase)
     result_tuple_list = []
-    weight = 0
+    weight = 1
     resultTuple = ()
 
     for key in forward_index:
         final_weight = 0
         for word in words:
             try:
-                weight += (term_freq[key][word] * inv_doc_freq[word])
+                weight *= (term_freq[key][word] * inv_doc_freq[word])
                 if final_weight == 0:
                     final_weight += weight
                 else:

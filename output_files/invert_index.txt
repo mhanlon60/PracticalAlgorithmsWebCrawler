@@ -61,7 +61,6 @@ author:['anna_karenina.txt', 'divine_comedy.txt', 'little_women.txt', 'moby_dick
 release:['anna_karenina.txt', 'divine_comedy.txt', 'little_women.txt', 'moby_dick.txt', 'oliver_twist.txt', 'room_with_a_view.txt', 'shakespeare.txt', 'sherlock.txt', 'war_and_peace.txt']
 date:['anna_karenina.txt', 'divine_comedy.txt', 'little_women.txt', 'moby_dick.txt', 'oliver_twist.txt', 'room_with_a_view.txt', 'shakespeare.txt', 'sherlock.txt', 'war_and_peace.txt']
 july:['anna_karenina.txt', 'little_women.txt', 'shakespeare.txt', 'war_and_peace.txt']
-:['anna_karenina.txt', 'divine_comedy.txt', 'little_women.txt', 'moby_dick.txt', 'oliver_twist.txt', 'room_with_a_view.txt', 'shakespeare.txt', 'sherlock.txt', 'war_and_peace.txt']
 recently:['anna_karenina.txt', 'moby_dick.txt', 'oliver_twist.txt', 'room_with_a_view.txt', 'shakespeare.txt', 'sherlock.txt', 'war_and_peace.txt']
 updated:['anna_karenina.txt', 'divine_comedy.txt', 'little_women.txt', 'moby_dick.txt', 'oliver_twist.txt', 'room_with_a_view.txt', 'shakespeare.txt', 'sherlock.txt', 'war_and_peace.txt']
 september:['anna_karenina.txt', 'little_women.txt', 'room_with_a_view.txt', 'sherlock.txt', 'war_and_peace.txt']
