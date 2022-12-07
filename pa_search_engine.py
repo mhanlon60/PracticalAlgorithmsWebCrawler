@@ -193,7 +193,7 @@ def search(search_phrase
     weight = 1
     resultTuple = ()
 
-    for key in forward_index:
+    for key in doc_rank.keys():
         final_weight = 0
         for word in words:
             try:
@@ -207,8 +207,8 @@ def search(search_phrase
                 final_weight = 0
                 break
 
-            resultTuple = (key, final_weight * doc_rank[key])
-            result_tuple_list.append(resultTuple)
+        resultTuple = (key, final_weight * doc_rank[key])
+        result_tuple_list.append(resultTuple)
 
     result_tuple_list.sort(key=lambda x: x[1], reverse=True)
     return result_tuple_list
